@@ -1,0 +1,25 @@
+version : '3'
+
+services:
+  db:
+    image: mysql:5.7
+    volumes: # 아래 볼륨 정의에서 가져옴
+      - db_data:/var/lib/mysql # db_data에 마운트
+    environment: 
+      mysql_root_password: somewordpress
+      mysql_database: wordpress # 데이터베이스 생성
+      mysql_user: wordpress # 사용자 생성
+      mysql_password: wordpress # 패스워드
+
+  wordpress:
+    image: wordpress
+    ports: 
+      - 60000:80
+    environment: 
+      wordpress_db_host: db:3306
+      wordpress_db_user: wordpress
+      wordpress_db_password: wordpress
+      wordpress_db_name: wordpress
+
+volumes:
+  db_data: {}      
